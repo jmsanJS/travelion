@@ -1,10 +1,10 @@
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 
-export default function ExploreScreen() {
+export default function HomeScreen() {
   return (
     <SafeAreaView>
       <View style={styles.titleContainer}>
-        <Text>Explore Screen</Text>
+        <Text>Home Screen</Text>
       </View>
     </SafeAreaView>
   );
@@ -13,6 +13,7 @@ export default function ExploreScreen() {
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
 });

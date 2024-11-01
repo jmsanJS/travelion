@@ -1,10 +1,10 @@
 import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 
-export default function ExploreScreen() {
+export default function SettingsScreen() {
   return (
     <SafeAreaView>
       <View style={styles.titleContainer}>
-        <Text>Explore Screen</Text>
+        <Text>Settings Screen</Text>
       </View>
     </SafeAreaView>
   );
