@@ -15,6 +15,7 @@ import {
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import Categories from "@/components/Categories";
 import SortCategories from "@/components/SortCategories";
+import Destinations from "@/components/Destinations";
 
 export default function HomeScreen() {
   return (
@@ -41,6 +42,8 @@ export default function HomeScreen() {
 
           <Categories />
           <SortCategories />
+          <Destinations />
+
       </ScrollView>
     </SafeAreaView>
   );
