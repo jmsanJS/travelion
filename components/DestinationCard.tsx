@@ -7,6 +7,8 @@ import {
 import { ImageSourcePropType } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { HeartIcon } from "react-native-heroicons/solid";
+import { useRouter } from "expo-router";
+
 
 interface DestinationProps {
   title: string;
@@ -21,15 +23,24 @@ interface DestinationProps {
 
 export default function DestinationCard(props: DestinationProps) {
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const router = useRouter();
 
   return (
-    <Pressable style={styles.clickableImg} onPress={() => console.log("press")}>
+    <Pressable
+      style={styles.clickableImg}
+      onPress={() =>
+        router.push({ pathname: "/destination", params: { ...props } })
+      }
+    >
       <Image source={props.image} style={styles.img} />
       <LinearGradient
-        colors={["transparent", "rgba(0,0,0,0.9)"]}
+        colors={["transparent", "rgba(0,0,0,1)"]}
         style={styles.background}
       />
-      <Pressable style={styles.heart} onPress={() => setIsFavorited(!isFavorited)}>
+      <Pressable
+        style={styles.heart}
+        onPress={() => setIsFavorited(!isFavorited)}
+      >
         <HeartIcon size={wp(5)} color={isFavorited ? "#FFA500" : "#FFF"} />
       </Pressable>
       <Text style={styles.title}>{props.title}</Text>
@@ -47,13 +58,13 @@ const styles = StyleSheet.create({
     position: "relative",
     justifyContent: "flex-end",
     paddingHorizontal: 12,
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   img: {
     height: hp(30),
     width: wp(40),
     borderRadius: 40,
-    position: "absolute"
+    position: "absolute",
   },
   background: {
     borderBottomLeftRadius: 40,
@@ -62,7 +73,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: hp(17),
+    height: hp(20),
   },
   heart: {
     position: "absolute",
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
     top: 15,
     backgroundColor: "rgba(50,50,50,0.3)",
     borderRadius: 20,
-    padding: 10
+    padding: 10,
   },
   title: {
     fontSize: hp(2),
@@ -82,6 +93,6 @@ const styles = StyleSheet.create({
   shortDesc: {
     fontSize: hp(1.4),
     color: "#FFF",
-    fontWeight: "500",
-  }
+    fontWeight: "600",
+  },
 });
