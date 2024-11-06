@@ -49,6 +49,7 @@ export const categoriesImg = [
 
 export const destinations = [
   {
+    id: 1,
     title: "Maldives",
     duration: "7 days",
     distance: 8700,
@@ -59,6 +60,7 @@ export const destinations = [
     image: require("../assets/images/destinations/maldives.jpg"),
   },
   {
+    id: 2,
     title: "Banff National Park",
     duration: "10 days",
     distance: 3000,
@@ -69,6 +71,7 @@ export const destinations = [
     image: require("../assets/images/destinations/banff.jpg"),
   },
   {
+    id: 3,
     title: "Tokyo",
     duration: "5 days",
     distance: 7000,
@@ -79,6 +82,7 @@ export const destinations = [
     image: require("../assets/images/destinations/tokyo.jpg"),
   },
   {
+    id: 4,
     title: "Sahara Desert",
     duration: "8 days",
     distance: 5000,
@@ -89,6 +93,7 @@ export const destinations = [
     image: require("../assets/images/destinations/sahara.jpg"),
   },
   {
+    id: 5,
     title: "Great Barrier Reef",
     duration: "7 days",
     distance: 12000,
@@ -99,6 +104,7 @@ export const destinations = [
     image: require("../assets/images/destinations/great-barrier-reef.jpg"),
   },
   {
+    id: 6,
     title: "Swiss Alps",
     duration: "9 days",
     distance: 6500,
@@ -109,6 +115,7 @@ export const destinations = [
     image: require("../assets/images/destinations/swiss-alps.jpg"),
   },
   {
+    id: 7,
     title: "Santorini",
     duration: "6 days",
     distance: 8000,
@@ -119,6 +126,7 @@ export const destinations = [
     image: require("../assets/images/destinations/santorini.jpg"),
   },
   {
+    id: 8,
     title: "Amazon Rainforest",
     duration: "12 days",
     distance: 4000,
@@ -129,6 +137,7 @@ export const destinations = [
     image: require("../assets/images/destinations/amazon.jpg"),
   },
   {
+    id: 9,
     title: "Machu Picchu",
     duration: "7 days",
     distance: 3000,
@@ -139,6 +148,7 @@ export const destinations = [
     image: require("../assets/images/destinations/machu-picchu.jpg"),
   },
   {
+    id: 10,
     title: "New York City",
     duration: "5 days",
     distance: 1500,
@@ -149,6 +159,7 @@ export const destinations = [
     image: require("../assets/images/destinations/nyc.jpg"),
   },
   {
+    id: 11,
     title: "Yosemite National Park",
     duration: "6 days",
     distance: 1800,
@@ -159,6 +170,7 @@ export const destinations = [
     image: require("../assets/images/destinations/yosemite.jpg"),
   },
   {
+    id: 12,
     title: "Dubai",
     duration: "4 days",
     distance: 8000,
@@ -169,6 +181,7 @@ export const destinations = [
     image: require("../assets/images/destinations/dubai.jpg"),
   },
   {
+    id: 13,
     title: "Galapagos Islands",
     duration: "10 days",
     distance: 9000,
@@ -179,6 +192,7 @@ export const destinations = [
     image: require("../assets/images/destinations/galapagos.jpg"),
   },
   {
+    id: 14,
     title: "Cinque Terre",
     duration: "5 days",
     distance: 7000,
@@ -189,6 +203,7 @@ export const destinations = [
     image: require("../assets/images/destinations/cinque-terre.jpg"),
   },
   {
+    id: 15,
     title: "Himalayas",
     duration: "15 days",
     distance: 9000,
@@ -199,6 +214,7 @@ export const destinations = [
     image: require("../assets/images/destinations/himalayas.jpg"),
   },
   {
+    id: 16,
     title: "Maui",
     duration: "8 days",
     distance: 8000,
@@ -209,6 +225,7 @@ export const destinations = [
     image: require("../assets/images/destinations/maui.jpg"),
   },
   {
+    id: 17,
     title: "Patagonia",
     duration: "12 days",
     distance: 7000,
@@ -219,6 +236,7 @@ export const destinations = [
     image: require("../assets/images/destinations/patagonia.jpg"),
   },
   {
+    id: 18,
     title: "Bora Bora",
     duration: "7 days",
     distance: 9500,
@@ -229,6 +247,7 @@ export const destinations = [
     image: require("../assets/images/destinations/bora-bora.jpg"),
   },
   {
+    id: 19,
     title: "Kruger National Park",
     duration: "10 days",
     distance: 7500,
@@ -239,6 +258,7 @@ export const destinations = [
     image: require("../assets/images/destinations/kruger.jpg"),
   },
   {
+    id: 20,
     title: "Bali",
     duration: "10 days",
     distance: 10000,
