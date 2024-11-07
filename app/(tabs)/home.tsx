@@ -12,10 +12,10 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import Categories from "@/components/Categories";
 import SortCategories from "@/components/SortCategories";
 import Destinations from "@/components/Destinations";
+import SearchBarComponent from "@/components/SearchBar";
 
 export default function HomeScreen() {
   return (
@@ -31,18 +31,10 @@ export default function HomeScreen() {
           </Pressable>
         </View>
 
-        <View style={styles.searchBar}>
-          <MagnifyingGlassIcon size={20} strokeWidth={3} color="gray" />
-          <TextInput
-            placeholder="Type a destination"
-            placeholderTextColor="gray"
-            style={styles.searchInput}
-          />
-        </View>
-
-          <Categories />
-          <SortCategories />
-          <Destinations />
+        <SearchBarComponent />
+        <Categories />
+        <SortCategories />
+        <Destinations />
 
       </ScrollView>
     </SafeAreaView>
@@ -57,7 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginVertical: 20
+    marginVertical: 20,
   },
   title: {
     fontSize: hp(3.5),
@@ -69,17 +61,5 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 20,
     backgroundColor: "#333",
-  },
-  searchBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 15,
-    backgroundColor: "#ddd",
-    borderRadius: 30,
-    marginVertical: 20,
-  },
-  searchInput: {
-    paddingLeft: 10,
-    fontSize: hp(2),
   },
 });
