@@ -20,9 +20,11 @@ import {
   MapPinIcon,
   SunIcon,
 } from "react-native-heroicons/solid";
+import { useFavorites } from "@/context/favoritesContext";
 
 export default function DestinationScreen() {
   const {
+    id,
     title,
     duration,
     distance,
@@ -33,7 +35,10 @@ export default function DestinationScreen() {
     image,
   } = useLocalSearchParams();
   const router = useRouter();
-  const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  // Correct type for id (only string type)
+  const destinationId = Array.isArray(id) ? id[0] : id;
 
   return (
     <View style={styles.container}>
@@ -46,9 +51,12 @@ export default function DestinationScreen() {
         </Pressable>
         <Pressable
           style={styles.headerIcon}
-          onPress={() => setIsFavorited(!isFavorited)}
+          onPress={() => toggleFavorite(destinationId)}
         >
-          <HeartIcon size={hp(4)} color={isFavorited ? "#FFA500" : "#FFF"} />
+          <HeartIcon
+            size={hp(4)}
+            color={isFavorite(destinationId) ? "#FFA500" : "#FFF"}
+          />
         </Pressable>
       </SafeAreaView>
 

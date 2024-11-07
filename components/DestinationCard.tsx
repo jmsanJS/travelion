@@ -1,5 +1,5 @@
 import { Text, Pressable, Image, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -8,9 +8,10 @@ import { ImageSourcePropType } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { HeartIcon } from "react-native-heroicons/solid";
 import { useRouter } from "expo-router";
-
+import { useFavorites } from "@/context/favoritesContext";
 
 interface DestinationProps {
+  id: number;
   title: string;
   duration: string;
   distance: number;
@@ -22,8 +23,11 @@ interface DestinationProps {
 }
 
 export default function DestinationCard(props: DestinationProps) {
-  const [isFavorited, setIsFavorited] = useState<boolean>(false);
   const router = useRouter();
+  const { favorites, isFavorite, toggleFavorite } = useFavorites();
+
+  // Necessary to view the favorited destinations in home screen
+  useEffect(() => {}, [favorites]);
 
   return (
     <Pressable
@@ -39,9 +43,12 @@ export default function DestinationCard(props: DestinationProps) {
       />
       <Pressable
         style={styles.heart}
-        onPress={() => setIsFavorited(!isFavorited)}
+        onPress={() => toggleFavorite(String(props.id))}
       >
-        <HeartIcon size={wp(5)} color={isFavorited ? "#FFA500" : "#FFF"} />
+        <HeartIcon
+          size={wp(5)}
+          color={isFavorite(String(props.id)) ? "#FFA500" : "#FFF"}
+        />
       </Pressable>
       <Text style={styles.title}>{props.title}</Text>
       <Text style={styles.shortDesc}>{props.shortDesc}</Text>
