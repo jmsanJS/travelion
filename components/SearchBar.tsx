@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { SearchBar } from "@rneui/themed";
 import { View, StyleSheet } from "react-native";
 
-type SearchBarComponentProps = {};
+interface SearchBarComponentProps {
+  search: string;
+  setSearch: (text: string) => void;
+};
 
-const SearchBarComponent: React.FunctionComponent<
-  SearchBarComponentProps
-> = () => {
-  const [search, setSearch] = useState("");
-
-  const updateSearch = (search: string) => {
-    setSearch(search);
-  };
-
+const SearchBarComponent: React.FunctionComponent<SearchBarComponentProps> = ({
+  search,
+  setSearch,
+}) => {
   return (
     <View style={styles.view}>
       <SearchBar
@@ -21,7 +19,8 @@ const SearchBarComponent: React.FunctionComponent<
         containerStyle={styles.containerStyle}
         inputContainerStyle={styles.inputContainerStyle}
         inputStyle={styles.inputStyle}
-        onChangeText={updateSearch}
+        onChangeText={setSearch}
+        autoCorrect={false}
         value={search}
       />
     </View>
@@ -44,8 +43,8 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   inputStyle: {
-    color: "#000"
-  }
+    color: "#000",
+  },
 });
 
 export default SearchBarComponent;

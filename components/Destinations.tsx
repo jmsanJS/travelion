@@ -2,24 +2,38 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import {
   heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import DestinationCard from "./DestinationCard";
 import { destinations } from "@/constants/constants";
 
-export default function Destinations() {
+interface SearchDestinationProps {
+  search: string;
+}
+
+export default function Destinations({ search }: SearchDestinationProps) {
+  const searchFilter = destinations.filter((destination) =>
+    destination.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Destinations</Text>
-      <ScrollView
-        style={styles.scroll}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      >
-        {destinations.map((item, index) => {
-          return <DestinationCard {...item} key={index} />;
-        })}
-      </ScrollView>
+      {searchFilter.length > 0 ? (
+        <ScrollView
+          style={styles.scroll}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          {searchFilter.map((item, index) => (
+            <DestinationCard {...item} key={index} />
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={styles.noResultsContainer}>
+          <Text style={styles.notFound}>No destinations found...</Text>
+          <Text style={styles.notFound}>Please try again</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -28,34 +42,19 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
   },
-  titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   title: {
-    fontSize: hp(2),
+    fontSize: 18,
     fontWeight: "500",
-  },
-  seeAllCat: {
-    fontSize: hp(2),
-    color: "#FFA500",
-    fontWeight: "bold",
   },
   scroll: {
     marginVertical: 15,
   },
-  categoryContainer: {
-    height: "auto",
-    width: 80,
-    marginEnd: 15,
+  noResultsContainer: {
+    marginVertical: hp(10),
+    alignItems: "center",
   },
-  img: {
-    height: 80,
-    width: 80,
-    borderRadius: 25,
-  },
-  categoryTitle: {
-    marginTop: 10,
-    textAlign: "center",
+  notFound: {
+    fontSize: hp(1.8),
+    color: "gray",
   },
 });

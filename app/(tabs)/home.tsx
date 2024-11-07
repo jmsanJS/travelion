@@ -6,21 +6,25 @@ import {
   Text,
   View,
   Image,
-  TextInput,
 } from "react-native";
 import {
   heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import Categories from "@/components/Categories";
 import SortCategories from "@/components/SortCategories";
 import Destinations from "@/components/Destinations";
 import SearchBarComponent from "@/components/SearchBar";
+import { useState } from "react";
 
 export default function HomeScreen() {
+  const [search, setSearch] = useState("");
+
   return (
-    <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollContainer}
+      >
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Let's Explore</Text>
           <Pressable onPress={() => console.log("press")}>
@@ -31,11 +35,10 @@ export default function HomeScreen() {
           </Pressable>
         </View>
 
-        <SearchBarComponent />
+        <SearchBarComponent search={search} setSearch={setSearch} />
         <Categories />
         <SortCategories />
-        <Destinations />
-
+        <Destinations search={search} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -43,6 +46,10 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#FFF",
+    flex: 1,
+  },
+  scrollContainer: {
     paddingHorizontal: 15,
   },
   titleContainer: {
