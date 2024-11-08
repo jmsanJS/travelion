@@ -47,7 +47,7 @@ export const destinations = [
     longDesc: "Known for its overwater bungalows and vibrant coral reefs, the Maldives offers a luxurious escape with world-class diving, serene beaches, and enchanting marine life encounters.",
     image: require("../assets/images/destinations/maldives.jpg"),
     category: "Beach",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 2,
@@ -60,7 +60,7 @@ export const destinations = [
     longDesc: "Banff offers scenic mountain views, pristine lakes, and opportunities for hiking, canoeing, and wildlife watching, making it an ideal destination for nature lovers and adventure enthusiasts.",
     image: require("../assets/images/destinations/banff.jpg"),
     category: "Camp",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 3,
@@ -73,7 +73,7 @@ export const destinations = [
     longDesc: "Tokyo is renowned for its skyscrapers, historic temples, vibrant districts, and exceptional cuisine, providing an unparalleled cultural and urban experience.",
     image: require("../assets/images/destinations/tokyo.jpg"),
     category: "Cities",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 4,
@@ -86,7 +86,7 @@ export const destinations = [
     longDesc: "The Sahara Desert offers a unique adventure, with camel rides, desert camping under starlit skies, and an opportunity to connect with the ancient traditions of nomadic cultures.",
     image: require("../assets/images/destinations/sahara.jpg"),
     category: "Desert",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 5,
@@ -99,7 +99,7 @@ export const destinations = [
     longDesc: "A UNESCO World Heritage Site, the Great Barrier Reef invites divers and snorkelers to explore vibrant underwater ecosystems, teeming with colorful fish, sea turtles, and mesmerizing coral formations.",
     image: require("../assets/images/destinations/great-barrier-reef.jpg"),
     category: "Beach",
-    group: "Featured"
+    labels: "Featured"
   },
   {
     id: 6,
@@ -112,7 +112,7 @@ export const destinations = [
     longDesc: "The Swiss Alps offer breathtaking scenery, from lush valleys to glacial peaks, as well as exhilarating outdoor activities like skiing, mountaineering, and serene alpine hiking trails.",
     image: require("../assets/images/destinations/swiss-alps.jpg"),
     category: "Hiking",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 7,
@@ -125,7 +125,7 @@ export const destinations = [
     longDesc: "Famous for its breathtaking sunsets, turquoise waters, and volcanic beaches, Santorini is a romantic escape with rich history, delightful cuisine, and unique landscapes shaped by volcanic activity.",
     image: require("../assets/images/destinations/santorini.jpg"),
     category: "Landscape",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 8,
@@ -138,7 +138,7 @@ export const destinations = [
     longDesc: "The Amazon offers an unparalleled ecological experience with river cruises, jungle treks, and the chance to observe exotic wildlife such as pink dolphins, toucans, and jaguars in their natural habitat.",
     image: require("../assets/images/destinations/amazon.jpg"),
     category: "Forest",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 9,
@@ -151,7 +151,7 @@ export const destinations = [
     longDesc: "As a UNESCO World Heritage Site and one of the New Seven Wonders of the World, Machu Picchu offers visitors a mystical journey into the history of the Inca Empire, surrounded by breathtaking mountain landscapes.",
     image: require("../assets/images/destinations/machu-picchu.jpg"),
     category: "Landscape",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 10,
@@ -164,7 +164,7 @@ export const destinations = [
     longDesc: "From Times Square to Central Park, NYC offers a vibrant urban adventure, with world-renowned art, architecture, theater, and dining that captivates visitors from around the globe.",
     image: require("../assets/images/destinations/nyc.jpg"),
     category: "Cities",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 11,
@@ -177,7 +177,7 @@ export const destinations = [
     longDesc: "Yosemite's breathtaking landscapes include iconic landmarks like El Capitan and Half Dome, lush meadows, waterfalls, and abundant hiking trails for nature enthusiasts.",
     image: require("../assets/images/destinations/yosemite.jpg"),
     category: "Hiking",
-    group: "Featured"
+    labels: "Featured"
   },
   {
     id: 12,
@@ -190,7 +190,7 @@ export const destinations = [
     longDesc: "Dubai offers a mix of modern marvels and Arabian heritage, with attractions ranging from the tallest building in the world, the Burj Khalifa, to traditional souks and desert safaris.",
     image: require("../assets/images/destinations/dubai.jpg"),
     category: "Cities",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 13,
@@ -203,7 +203,7 @@ export const destinations = [
     longDesc: "Famed for its role in Charles Darwin's research, the Galapagos offers unique ecosystems where visitors can encounter giant tortoises, marine iguanas, and playful sea lions.",
     image: require("../assets/images/destinations/galapagos.jpg"),
     category: "Diving",
-    group: "Featured"
+    labels: "Featured"
   },
   {
     id: 14,
@@ -216,7 +216,7 @@ export const destinations = [
     longDesc: "Cinque Terre is a UNESCO World Heritage Site known for its dramatic coastal scenery, cliffside villages, hiking trails, and warm Mediterranean culture.",
     image: require("../assets/images/destinations/cinque-terre.jpg"),
     category: "Landscape",
-    group: "Featured"
+    labels: "Featured"
   },
   {
     id: 15,
@@ -229,7 +229,7 @@ export const destinations = [
     longDesc: "The Himalayas are famed for Mount Everest and provide awe-inspiring scenery, challenging treks, and a unique cultural experience with monasteries and remote villages.",
     image: require("../assets/images/destinations/himalayas.jpg"),
     category: "Hiking",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 16,
@@ -242,7 +242,7 @@ export const destinations = [
     longDesc: "Maui offers a mix of stunning beaches, vibrant marine life, and iconic locations such as Haleakalā National Park and the scenic Hana Highway.",
     image: require("../assets/images/destinations/maui.jpg"),
     category: "Beach",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 17,
@@ -255,7 +255,7 @@ export const destinations = [
     longDesc: "Patagonia, spanning Argentina and Chile, is a haven for adventurers, offering glacier hikes, dramatic mountain views, and the famous Torres del Paine National Park.",
     image: require("../assets/images/destinations/patagonia.jpg"),
     category: "Landscape",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 18,
@@ -268,7 +268,7 @@ export const destinations = [
     longDesc: "Bora Bora is a tropical paradise with stunning coral reefs, breathtaking views of Mount Otemanu, and a tranquil setting ideal for relaxation and water activities.",
     image: require("../assets/images/destinations/bora-bora.jpg"),
     category: "Diving",
-    group: "Popular"
+    labels: "Popular"
   },
   {
     id: 19,
@@ -281,7 +281,7 @@ export const destinations = [
     longDesc: "Kruger offers an authentic safari experience with guided tours and self-drive options, allowing visitors to see lions, elephants, rhinos, and more in their natural habitat.",
     image: require("../assets/images/destinations/kruger.jpg"),
     category: "Hiking",
-    group: "Featured"
+    labels: "Featured"
   },
   {
     id: 20,
@@ -294,6 +294,6 @@ export const destinations = [
     longDesc: "Bali offers something for everyone, from the vibrant beaches of Seminyak and Kuta to tranquil rice terraces in Ubud and spiritual experiences at ancient temples.",
     image: require("../assets/images/destinations/bali.jpg"),
     category: "Beach",
-    group: "Popular"
+    labels: "Popular"
   },
 ];
