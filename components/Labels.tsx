@@ -3,8 +3,21 @@ import React, { useState } from "react";
 import { labels } from "@/constants/constants";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-export default function Labels() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+interface LabelsProps {
+  searchByLabel: string;
+  setSearchByLabel: (label: string) => void;
+}
+
+export default function Labels({
+  searchByLabel,
+  setSearchByLabel,
+}: LabelsProps) {
+  const [selectedLabel, setSelectedLabel] = useState<string>("All");
+
+  const handleSelectedLabelClick = (label: string) => {
+    setSelectedLabel(label);
+    setSearchByLabel(label);
+  };
   const bubbleStyle = {
     backgroundColor: "#FFF",
     shadowColor: "#000",
@@ -19,18 +32,18 @@ export default function Labels() {
 
   return (
     <View style={styles.container}>
-      {labels.map((item, index) => {
-        let isActiveColor = item === selectedCategory ? "#FFA500" : "#000";
-        let isActiveBtn = item === selectedCategory ? bubbleStyle : null;
+      {labels.map((label, index) => {
+        let isActiveColor = label === selectedLabel ? "#FFA500" : "#000";
+        let isActiveBtn = label === selectedLabel ? bubbleStyle : null;
 
         return (
           <Pressable
             key={index}
             style={[styles.category, isActiveBtn]}
-            onPress={() => setSelectedCategory(item)}
+            onPress={() => handleSelectedLabelClick(label)}
           >
             <Text style={[styles.categoryText, { color: isActiveColor }]}>
-              {item}
+              {label}
             </Text>
           </Pressable>
         );

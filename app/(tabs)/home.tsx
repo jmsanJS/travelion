@@ -7,9 +7,7 @@ import {
   View,
   Image,
 } from "react-native";
-import {
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import Categories from "@/components/Categories";
 import Labels from "@/components/Labels";
 import Destinations from "@/components/Destinations";
@@ -19,6 +17,7 @@ import { useState } from "react";
 export default function HomeScreen() {
   const [search, setSearch] = useState("");
   const [searchByCategory, setSearchByCategory] = useState("");
+  const [searchByLabel, setSearchByLabel] = useState("");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,9 +36,19 @@ export default function HomeScreen() {
         </View>
 
         <SearchBarComponent search={search} setSearch={setSearch} />
-        <Categories searchByCategory={searchByCategory} setSearchByCategory={setSearchByCategory}/>
-        <Labels />
-        <Destinations search={search} searchByCategory={searchByCategory}/>
+        <Categories
+          searchByCategory={searchByCategory}
+          setSearchByCategory={setSearchByCategory}
+        />
+        <Labels
+          searchByLabel={searchByLabel}
+          setSearchByLabel={setSearchByLabel}
+        />
+        <Destinations
+          search={search}
+          searchByCategory={searchByCategory}
+          searchByLabel={searchByLabel}
+        />
       </ScrollView>
     </SafeAreaView>
   );

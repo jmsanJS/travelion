@@ -6,6 +6,7 @@ import {
 } from "react-native-responsive-screen";
 import DestinationCard from "./DestinationCard";
 import { destinations } from "@/constants/constants";
+import { useFavorites } from "@/context/favoritesContext";
 
 interface SearchDestinationProps {
   search: string;
@@ -18,6 +19,8 @@ export default function Destinations({
   searchByCategory,
   searchByLabel,
 }: SearchDestinationProps) {
+  const { favorites } = useFavorites();
+
   const combinedFilter = destinations.filter((destination) => {
     const matchedSearch = search
       ? destination.title.toLowerCase().includes(search.toLowerCase())
@@ -26,9 +29,11 @@ export default function Destinations({
       ? destination.category.includes(searchByCategory)
       : true;
     const matchedLabel =
-      searchByLabel === "Popular" || searchByLabel === "Featured"
-        ? destination.label.includes(searchByLabel)
-        : true;
+      searchByLabel === "All"
+        ? true
+        : searchByLabel === "Liked"
+        ? favorites.includes(String(destination.id))
+        : destination.label.includes(searchByLabel);
 
     return matchedSearch && matchedCategory && matchedLabel;
   });
