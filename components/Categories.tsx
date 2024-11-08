@@ -10,16 +10,24 @@ import {
 import { categoriesImg } from "@/constants/constants";
 import {
   heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 
-export default function Categories() {
+interface CategoriesProps {
+  searchByCategory: string;
+  setSearchByCategory: (category: string) => void;
+}
+
+const Categories: React.FunctionComponent<CategoriesProps> = ({
+  searchByCategory,
+  setSearchByCategory,
+}) => {
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Categories</Text>
         <Pressable>
-          <Text style={styles.seeAllCat}>See all</Text>
+          <Text onPress={() => setSearchByCategory("")} style={styles.seeAllCat}>See all</Text>
         </Pressable>
       </View>
       <ScrollView
@@ -29,7 +37,11 @@ export default function Categories() {
       >
         {categoriesImg.map((category, index) => {
           return (
-            <Pressable key={index} style={styles.categoryContainer}>
+            <Pressable
+              key={index}
+              onPress={() => setSearchByCategory(category.title)}
+              style={styles.categoryContainer}
+            >
               <Image source={category.image} style={styles.img} />
               <Text style={styles.categoryTitle}>{category.title}</Text>
             </Pressable>
@@ -75,3 +87,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+export default Categories;

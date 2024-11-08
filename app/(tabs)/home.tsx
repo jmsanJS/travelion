@@ -18,6 +18,7 @@ import { useState } from "react";
 
 export default function HomeScreen() {
   const [search, setSearch] = useState("");
+  const [searchByCategory, setSearchByCategory] = useState("");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,9 +37,9 @@ export default function HomeScreen() {
         </View>
 
         <SearchBarComponent search={search} setSearch={setSearch} />
-        <Categories />
+        <Categories searchByCategory={searchByCategory} setSearchByCategory={setSearchByCategory}/>
         <SortCategories />
-        <Destinations search={search} />
+        <Destinations search={search} searchByCategory={searchByCategory}/>
       </ScrollView>
     </SafeAreaView>
   );
