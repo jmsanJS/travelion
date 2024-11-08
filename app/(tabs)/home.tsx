@@ -11,7 +11,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Categories from "@/components/Categories";
-import SortCategories from "@/components/SortCategories";
+import Labels from "@/components/Labels";
 import Destinations from "@/components/Destinations";
 import SearchBarComponent from "@/components/SearchBar";
 import { useState } from "react";
@@ -38,7 +38,7 @@ export default function HomeScreen() {
 
         <SearchBarComponent search={search} setSearch={setSearch} />
         <Categories searchByCategory={searchByCategory} setSearchByCategory={setSearchByCategory}/>
-        <SortCategories />
+        <Labels />
         <Destinations search={search} searchByCategory={searchByCategory}/>
       </ScrollView>
     </SafeAreaView>

@@ -1,31 +1,27 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { categoriesList } from "@/constants/constants";
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from "react-native-responsive-screen";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-export default function SortCategories() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("Popular");
+export default function Labels() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const bubbleStyle = {
+    backgroundColor: "#FFF",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 7,
+    elevation: 7,
+  };
+
   return (
     <View style={styles.container}>
       {categoriesList.map((item, index) => {
         let isActiveColor = item === selectedCategory ? "#FFA500" : "#000";
-        let isActiveBtn =
-          item === selectedCategory
-            ? {
-                backgroundColor: "#FFF",
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 0,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 7,
-                elevation: 7,
-              }
-            : null;
+        let isActiveBtn = item === selectedCategory ? bubbleStyle : null;
 
         return (
           <Pressable
