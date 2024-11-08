@@ -1,27 +1,36 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 import DestinationCard from "./DestinationCard";
 import { destinations } from "@/constants/constants";
 
 interface SearchDestinationProps {
   search: string;
   searchByCategory: string;
+  searchByLabel: string;
 }
 
 export default function Destinations({
   search,
   searchByCategory,
+  searchByLabel,
 }: SearchDestinationProps) {
   const combinedFilter = destinations.filter((destination) => {
-    const matchesSearch = search
+    const matchedSearch = search
       ? destination.title.toLowerCase().includes(search.toLowerCase())
       : true;
-    const matchesCategory = searchByCategory
+    const matchedCategory = searchByCategory
       ? destination.category.includes(searchByCategory)
       : true;
+    const matchedLabel =
+      searchByLabel === "Popular" || searchByLabel === "Featured"
+        ? destination.label.includes(searchByLabel)
+        : true;
 
-    return matchesSearch && matchesCategory;
+    return matchedSearch && matchedCategory && matchedLabel;
   });
 
   return (
@@ -29,9 +38,8 @@ export default function Destinations({
       <Text style={styles.title}>Destinations</Text>
       {combinedFilter.length > 0 ? (
         <ScrollView
-          style={styles.scroll}
-          horizontal
-          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scroll}
+          showsVerticalScrollIndicator={false}
         >
           {combinedFilter.map((item, index) => (
             <DestinationCard {...item} key={index} />
@@ -57,6 +65,11 @@ const styles = StyleSheet.create({
   },
   scroll: {
     marginVertical: 15,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: wp(5),
   },
   noResultsContainer: {
     marginVertical: hp(10),

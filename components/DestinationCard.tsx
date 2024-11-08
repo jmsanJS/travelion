@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   clickableImg: {
     height: hp(30),
     width: wp(40),
-    marginRight: 15,
     borderRadius: 40,
     position: "relative",
     justifyContent: "flex-end",
