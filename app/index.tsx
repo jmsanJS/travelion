@@ -36,7 +36,7 @@ export default function WelcomeScreen() {
           <Text style={styles.subtitle}>
             Ready to explore new breathtaking places with us?
           </Text>
-          <Pressable onPress={() => router.push("/home")} style={styles.btn}>
+          <Pressable onPress={() => router.push("/explore")} style={styles.btn}>
             <Text style={styles.btnText}>Let's go!</Text>
           </Pressable>
         </Animated.View>
