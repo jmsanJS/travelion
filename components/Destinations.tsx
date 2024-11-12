@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
   },
   notFound: {
     fontSize: hp(1.8),
-    color: "gray",
+    color: "#777",
   },
 });
