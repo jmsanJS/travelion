@@ -5,7 +5,7 @@ import { View, StyleSheet } from "react-native";
 interface SearchBarComponentProps {
   search: string;
   setSearch: (text: string) => void;
-};
+}
 
 const SearchBarComponent: React.FunctionComponent<SearchBarComponentProps> = ({
   search,
@@ -15,10 +15,12 @@ const SearchBarComponent: React.FunctionComponent<SearchBarComponentProps> = ({
     <View style={styles.view}>
       <SearchBar
         placeholder="Type a destination"
-        placeholderTextColor={"gray"}
+        placeholderTextColor={"#777"}
         containerStyle={styles.containerStyle}
         inputContainerStyle={styles.inputContainerStyle}
-        inputStyle={styles.inputStyle}
+        inputStyle={{ color: "#000" }}
+        searchIcon={{ color: "#777" }}
+        clearIcon={{ color: "#777" }}
         onChangeText={setSearch}
         autoCorrect={false}
         value={search}
@@ -41,9 +43,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#C3C99D",
     borderRadius: 50,
     padding: 3,
-  },
-  inputStyle: {
-    color: "#000",
   },
 });
 
