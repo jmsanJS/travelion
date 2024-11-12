@@ -33,7 +33,7 @@ export default function Labels({
   return (
     <View style={styles.container}>
       {labels.map((label, index) => {
-        let isActiveColor = label === selectedLabel ? "#FFA500" : "#000";
+        let isActiveColor = label === selectedLabel ? "#E25050" : "#000";
         let isActiveBtn = label === selectedLabel ? bubbleStyle : null;
 
         return (
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#dddd",
+    backgroundColor: "#C3C99D",
     padding: 10,
     borderRadius: 50,
   },

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   seeAllCat: {
     fontSize: hp(2),
-    color: "#FFA500",
+    color: "#E25050",
     fontWeight: "bold",
   },
   scroll: {

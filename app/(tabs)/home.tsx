@@ -56,7 +56,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#E5E6CA",
     flex: 1,
   },
   scrollContainer: {

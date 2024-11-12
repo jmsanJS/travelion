@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "transparent",
   },
   inputContainerStyle: {
-    backgroundColor: "#ddd",
+    backgroundColor: "#C3C99D",
     borderRadius: 50,
     padding: 3,
   },

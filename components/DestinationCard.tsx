@@ -47,7 +47,7 @@ export default function DestinationCard(props: DestinationProps) {
       >
         <HeartIcon
           size={wp(5)}
-          color={isFavorite(String(props.id)) ? "#FFA500" : "#FFF"}
+          color={isFavorite(String(props.id)) ? "#E25050" : "#FFF"}
         />
       </Pressable>
       <Text style={styles.title}>{props.title}</Text>

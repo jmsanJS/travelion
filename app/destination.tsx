@@ -55,7 +55,7 @@ export default function DestinationScreen() {
         >
           <HeartIcon
             size={hp(4)}
-            color={isFavorite(destinationId) ? "#FFA500" : "#FFF"}
+            color={isFavorite(destinationId) ? "#E25050" : "#FFF"}
           />
         </Pressable>
       </SafeAreaView>
