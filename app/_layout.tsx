@@ -27,6 +27,8 @@ export default function RootLayout() {
     <FavoritesContextProvider>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="signIn" options={{ headerShown: false }} />
+        <Stack.Screen name="signUp" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="destination" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
