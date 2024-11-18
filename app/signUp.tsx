@@ -24,20 +24,22 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
+import { useUser } from "@/context/userContext";
 
 export default function signUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { setUser } = useUser();
   const router = useRouter();
 
   const handleSignUp = async () => {
-    if (!username || !email || !password || !passwordConfirmation || !checked) {
+    if (!username || !email || !password || !pictureUrl || !checked) {
       Alert.alert("All fields are required.");
       return;
     }
@@ -51,10 +53,18 @@ export default function signUp() {
       const user = userCredential.user;
 
       try {
-        const docRef = await addDoc(collection(db, "users"), {
+        await setDoc(doc(db, "users", user.uid), {
           username: username,
           email: email,
+          pictureUrl: pictureUrl,
           userId: user.uid,
+        });
+
+        setUser({
+          uid: user.uid,
+          username,
+          email,
+          pictureUrl,
         });
 
         sendEmailVerification(user);
@@ -98,6 +108,7 @@ export default function signUp() {
                   placeholder="Username"
                   placeholderTextColor={"#888"}
                   keyboardType="default"
+                  autoCorrect={false}
                   onChangeText={(value) => setUsername(value)}
                   value={username}
                 />
@@ -116,6 +127,18 @@ export default function signUp() {
                 />
               </View>
               <View style={styles.inputContainer}>
+                <Entypo name="image" size={24} color="#222" />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Profile Picture URL"
+                  placeholderTextColor={"#888"}
+                  keyboardType="default"
+                  autoCapitalize="none"
+                  onChangeText={(value) => setPictureUrl(value)}
+                  value={pictureUrl}
+                />
+              </View>
+              <View style={styles.inputContainer}>
                 <Entypo name="lock" size={24} color="#222" />
                 <TextInput
                   style={styles.input}
@@ -125,18 +148,6 @@ export default function signUp() {
                   autoCapitalize="none"
                   onChangeText={(value) => setPassword(value)}
                   value={password}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Entypo name="lock" size={24} color="#222" />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Confirm password"
-                  placeholderTextColor={"#888"}
-                  secureTextEntry={true}
-                  autoCapitalize="none"
-                  onChangeText={(value) => setPasswordConfirmation(value)}
-                  value={passwordConfirmation}
                 />
               </View>
               <View style={styles.termsContainer}>
@@ -217,6 +228,7 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingLeft: 10,
+    paddingRight: 20,
     fontSize: hp(2),
     width: "100%",
   },
