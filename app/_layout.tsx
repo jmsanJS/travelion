@@ -1,4 +1,5 @@
 import { FavoritesContextProvider } from "@/context/favoritesContext";
+import { UserContextProvider } from "@/context/userContext";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -24,15 +25,17 @@ export default function RootLayout() {
   }
 
   return (
-    <FavoritesContextProvider>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="signIn" options={{ headerShown: false }} />
-        <Stack.Screen name="signUp" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="destination" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </FavoritesContextProvider>
+    <UserContextProvider>
+      <FavoritesContextProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="signIn" options={{ headerShown: false }} />
+          <Stack.Screen name="signUp" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="destination" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </FavoritesContextProvider>
+    </UserContextProvider>
   );
 }
