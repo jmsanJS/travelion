@@ -5,6 +5,7 @@ import {
   ImageBackground,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Loading from "@/components/Loading";
@@ -15,12 +16,55 @@ import {
 } from "react-native-responsive-screen";
 import { Entypo } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { auth, db } from "@/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import { doc, getDoc } from "firebase/firestore";
+import { useUser } from "@/context/userContext";
 
 export default function signIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setUser } = useUser();
   const router = useRouter();
+
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      Alert.alert("All fields are required.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const credential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const userId = credential.user.uid;
+
+      const refDoc = doc(db, "users", userId);
+      const docSnapshot = await getDoc(refDoc);
+
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data();
+        setUser({
+          username: data.username,
+          email: data.email,
+          pictureUrl: data.pictureUrl,
+          uid: userId,
+        });
+      }
+
+      router.push("/(tabs)/explore");
+    } catch (signInError) {
+      if (signInError instanceof FirebaseError) {
+        console.error("Error code: ", signInError.code);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -66,7 +110,7 @@ export default function signIn() {
               <Loading size={100} />
             </View>
           ) : (
-            <Pressable onPress={() => console.log("signIn")} style={styles.btn}>
+            <Pressable onPress={handleSignIn} style={styles.btn}>
               <Text style={styles.btnText}>Sign In</Text>
             </Pressable>
           )}
@@ -132,6 +176,7 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingLeft: 10,
+    paddingRight: 20,
     fontSize: hp(2),
     width: "100%",
   },
@@ -145,7 +190,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   loading: {
-    marginVertical: 20,
+    marginVertical: 25,
   },
   btn: {
     paddingVertical: 15,
