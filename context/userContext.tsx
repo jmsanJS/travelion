@@ -8,7 +8,7 @@ interface UserContextType {
         pictureUrl: string | undefined;
         uid: string | undefined;
       }
-    | undefined;
+    | undefined | null;
   setUser: React.Dispatch<
     React.SetStateAction<
       | {
@@ -17,7 +17,7 @@ interface UserContextType {
           pictureUrl: string | undefined;
           uid: string | undefined;
         }
-      | undefined
+      | undefined | null
     >
   >;
 }
@@ -34,7 +34,7 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
         pictureUrl: string | undefined;
         uid: string | undefined;
       }
-    | undefined
+    | undefined | null
   >(undefined);
 
   return (
