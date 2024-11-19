@@ -99,12 +99,14 @@ export default function signIn() {
               value={password}
             />
           </View>
-          <Pressable
-            onPress={() => console.log("forgot")}
-            style={styles.forgotPwdContainer}
-          >
-            <Text style={styles.forgotPwd}>Forgot password?</Text>
-          </Pressable>
+          <View style={styles.forgotPwdContainer}>
+            <Pressable
+              onPress={() => console.log("forgot password")}
+              style={styles.forgotPwdLink}
+            >
+              <Text style={styles.forgotPwd}>Forgot password?</Text>
+            </Pressable>
+          </View>
           {loading ? (
             <View style={styles.loading}>
               <Loading size={100} />
@@ -115,7 +117,7 @@ export default function signIn() {
             </Pressable>
           )}
           <Pressable
-            onPress={() => console.log("google")}
+            onPress={() => console.log("google sign-in")}
             style={styles.btnGoogle}
           >
             <AntDesign
@@ -126,10 +128,16 @@ export default function signIn() {
             />
             <Text style={styles.btnGoogleText}>Sign In with Google</Text>
           </Pressable>
-          <View style={styles.noAccount}>
+          <View style={styles.questionContainer}>
             <Text style={styles.question}>Do you have an account? </Text>
             <Pressable onPress={() => router.push("/signUp")}>
-              <Text style={styles.signUpLink}>Sign Up</Text>
+              <Text style={styles.questionLink}>Sign Up</Text>
+            </Pressable>
+          </View>
+          <View style={styles.questionContainer}>
+            <Text style={styles.question}>I want to use Travelion </Text>
+            <Pressable onPress={() => router.push("/explore")}>
+              <Text style={styles.questionLink}>without Signing Up </Text>
             </Pressable>
           </View>
         </View>
@@ -181,6 +189,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   forgotPwdContainer: {
+    alignItems: "flex-end",
+  },
+  forgotPwdLink: {
     alignItems: "flex-end",
   },
   forgotPwd: {
@@ -241,16 +252,17 @@ const styles = StyleSheet.create({
     color: "#222",
     letterSpacing: 0.5,
   },
-  noAccount: {
+  questionContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    marginBottom: 5,
   },
   question: {
     fontSize: 16,
     color: "#222",
     fontWeight: "300",
   },
-  signUpLink: {
+  questionLink: {
     textDecorationLine: "underline",
     fontWeight: "300",
     fontSize: 16,
