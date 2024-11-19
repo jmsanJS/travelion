@@ -1,80 +1,59 @@
 import {
   View,
   Text,
-  StyleSheet,
-  ImageBackground,
-  TextInput,
-  Pressable,
   Alert,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  TextInput,
 } from "react-native";
 import React, { useState } from "react";
-import Loading from "@/components/Loading";
 import { useRouter } from "expo-router";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
+import { Entypo } from "@expo/vector-icons";
+import Loading from "@/components/Loading";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { Entypo } from "@expo/vector-icons";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { auth, db } from "@/firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { FirebaseError } from "firebase/app";
-import { doc, getDoc } from "firebase/firestore";
-import { useUser } from "@/context/userContext";
 
-export default function signIn() {
+export default function ResetPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setUser } = useUser();
   const router = useRouter();
 
-  const handleSignIn = async () => {
-    if (!email || !password) {
-      Alert.alert("All fields are required.");
+  const handleResetPassword = async () => {
+    if (email === "") {
+      Alert.alert("Please enter your email address");
       return;
     }
     setLoading(true);
+
     try {
-      const credential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const userId = credential.user.uid;
-
-      const refDoc = doc(db, "users", userId);
-      const docSnapshot = await getDoc(refDoc);
-
-      if (docSnapshot.exists()) {
-        const data = docSnapshot.data();
-        setUser({
-          username: data.username,
-          email: data.email,
-          pictureUrl: data.pictureUrl,
-          uid: userId,
-        });
-      }
-
-      router.push("/(tabs)/explore");
-    } catch (signInError) {
-      if (signInError instanceof FirebaseError) {
-        console.error("Error code: ", signInError.code);
-      }
+      await sendPasswordResetEmail(auth, email);
+      Alert.alert("An email has been sent");
+      router.back();
+    } catch (error) {
+      const errorMsg = (error as Error).message;
+      Alert.alert("Error sending email", errorMsg);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <>
       <ImageBackground
-        source={require("../assets/images/bg-signIn.jpg")}
+        source={require("../assets/images/bg-reset-password.jpg")}
         resizeMode="cover"
         style={styles.bgImg}
       >
         <View style={styles.formContainer}>
-          <Text style={styles.title}>Sign In</Text>
+          <Text style={styles.title}>Reset password</Text>
+          <Text style={styles.subtitle}>
+            Enter the email associated with your account and we'll send you
+            password reset instructions.
+          </Text>
           <View style={styles.inputContainer}>
             <Entypo name="email" size={24} color="#222" />
             <TextInput
@@ -87,57 +66,20 @@ export default function signIn() {
               value={email}
             />
           </View>
-          <View style={styles.inputContainer}>
-            <Entypo name="lock" size={24} color="#222" />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor={"#888"}
-              secureTextEntry={true}
-              autoCapitalize="none"
-              onChangeText={(value) => setPassword(value)}
-              value={password}
-            />
-          </View>
-          <View style={styles.forgotPwdContainer}>
-            <Pressable
-              onPress={() => router.push("/reset-password")}
-              style={styles.forgotPwdLink}
-            >
-              <Text style={styles.forgotPwd}>Forgot password?</Text>
-            </Pressable>
-          </View>
+
           {loading ? (
             <View style={styles.loading}>
               <Loading size={100} />
             </View>
           ) : (
-            <Pressable onPress={handleSignIn} style={styles.btn}>
-              <Text style={styles.btnText}>Sign In</Text>
+            <Pressable onPress={handleResetPassword} style={styles.btn}>
+              <Text style={styles.btnText}>Send Email</Text>
             </Pressable>
           )}
-          <Pressable
-            onPress={() => console.log("google sign-in")}
-            style={styles.btnGoogle}
-          >
-            <AntDesign
-              name="google"
-              size={30}
-              color="#222"
-              style={{ marginRight: 10 }}
-            />
-            <Text style={styles.btnGoogleText}>Sign In with Google</Text>
-          </Pressable>
           <View style={styles.questionContainer}>
-            <Text style={styles.question}>Do you have an account? </Text>
-            <Pressable onPress={() => router.push("/signUp")}>
-              <Text style={styles.questionLink}>Sign Up</Text>
-            </Pressable>
-          </View>
-          <View style={styles.questionContainer}>
-            <Text style={styles.question}>I want to use Travelion </Text>
+            <Text style={styles.question}>Return to </Text>
             <Pressable onPress={() => router.push("/explore")}>
-              <Text style={styles.questionLink}>without Signing Up </Text>
+              <Text style={styles.questionLink}>Sign In </Text>
             </Pressable>
           </View>
         </View>
@@ -160,11 +102,17 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: hp(5),
+    fontSize: hp(4),
     fontWeight: "200",
     color: "#222",
     textAlign: "center",
-    marginBottom: 30,
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#222",
+    fontWeight: "300",
+    marginBottom: 15,
   },
   inputContainer: {
     flexDirection: "row",
