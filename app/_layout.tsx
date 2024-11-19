@@ -27,13 +27,13 @@ export default function RootLayout() {
   return (
     <UserContextProvider>
       <FavoritesContextProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="signIn" options={{ headerShown: false }} />
-          <Stack.Screen name="reset-password" options={{ headerShown: false }} />
-          <Stack.Screen name="signUp" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="destination" options={{ headerShown: false }} />
+        <Stack screenOptions={{ headerShown: false }} initialRouteName="index">
+          <Stack.Screen name="index" />
+          <Stack.Screen name="signIn" />
+          <Stack.Screen name="reset-password" />
+          <Stack.Screen name="signUp" />
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="destination" />
           <Stack.Screen name="+not-found" />
         </Stack>
       </FavoritesContextProvider>
