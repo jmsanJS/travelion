@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -12,8 +12,19 @@ import { Entypo } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
 export default function Account() {
-  const { user } = useUser();
+  const { user, isAuthenticated } = useUser();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace("/signIn");
+    }
+  }, [isAuthenticated]);
+
+  // During verification process
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -150,7 +161,7 @@ const styles = StyleSheet.create({
   email: {
     fontSize: hp(2),
     textAlign: "center",
-    color: "#777"
+    color: "#777",
   },
   settingsContainer: {
     width: wp(100),
