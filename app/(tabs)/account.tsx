@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import React, { useEffect } from "react";
 import {
   heightPercentageToDP as hp,
@@ -7,12 +7,14 @@ import {
 import { Image } from "expo-image";
 import { useUser } from "@/context/userContext";
 import { blurhash } from "@/constants/constants";
-import { StatusBar } from "expo-status-bar";
 import { Entypo } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
+import UserSettingsHeader from "@/components/UserSettingsHeader";
 
 export default function Account() {
-  const { user, isAuthenticated } = useUser();
+  const { user, setUser, isAuthenticated } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -26,26 +28,37 @@ export default function Account() {
     return null;
   }
 
+  const handleSignOut = () => {
+    try {
+      signOut(auth);
+      setUser(null);
+      router.replace("/")
+    } catch (error) {
+      Alert.alert("Oops! Something went wrong. Try again later.");
+    }
+  };
+
+  const handleUpdateUsername = () => {
+    try {
+      router.push("/(user-settings)/updateUsername")
+    } catch (error) {
+      Alert.alert("Oops! Something went wrong. Try again later.");
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
-      <View style={styles.topDesign_1}>
-        <Pressable onPress={() => router.back()} style={styles.goBackBtn}>
-          <Entypo name="chevron-left" size={30} color="#222" />
-        </Pressable>
-      </View>
-      <View style={styles.topDesign_2}></View>
-      <View style={styles.topDesign_3}></View>
+      <UserSettingsHeader />
       <View style={styles.topUsersInfoContainer}>
         <Image
           source={user?.pictureUrl}
           style={styles.profileImg}
           placeholder={{ blurhash }}
         />
-        <Text style={styles.username}>Juanboca</Text>
-        <Text style={styles.email}>example@gmail.com</Text>
+        <Text style={styles.username}>{user?.username}</Text>
+        <Text style={styles.email}>{user?.email}</Text>
       </View>
-      <View style={styles.settingsContainer}>
+      <View style={styles.allSettingsContainer}>
         <Pressable
           onPress={() => console.log("setting")}
           style={styles.settingContainer}
@@ -63,7 +76,7 @@ export default function Account() {
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer}>
+        <Pressable style={styles.settingContainer} onPress={handleUpdateUsername}>
           <View style={{ flexDirection: "row" }}>
             <Entypo name="edit" size={24} color="#222" />
             <Text style={styles.settingText}>Update your username</Text>
@@ -91,12 +104,11 @@ export default function Account() {
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer}>
+        <Pressable style={styles.settingContainer} onPress={handleSignOut}>
           <View style={{ flexDirection: "row" }}>
             <Entypo name="log-out" size={24} color="#222" />
             <Text style={styles.settingText}>Log out</Text>
           </View>
-          <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
       </View>
     </View>
@@ -163,7 +175,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#777",
   },
-  settingsContainer: {
+  allSettingsContainer: {
     width: wp(100),
     paddingHorizontal: wp(8),
   },
