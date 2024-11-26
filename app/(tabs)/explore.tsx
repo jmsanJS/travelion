@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Alert,
 } from "react-native";
 import { Image } from "expo-image";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
@@ -14,9 +13,6 @@ import Labels from "@/components/Labels";
 import Destinations from "@/components/Destinations";
 import SearchBarComponent from "@/components/SearchBar";
 import { useState } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "@/firebaseConfig";
-import { useRouter } from "expo-router";
 import { useUser } from "@/context/userContext";
 import { blurhash } from "@/constants/constants";
 
@@ -24,18 +20,7 @@ export default function HomeScreen() {
   const [search, setSearch] = useState("");
   const [searchByCategory, setSearchByCategory] = useState("");
   const [searchByLabel, setSearchByLabel] = useState("");
-  const router = useRouter();
-  const { user, setUser } = useUser();
-
-  const handleSignOut = () => {
-    try {
-      signOut(auth);
-      setUser(null);
-      router.replace("/")
-    } catch (error) {
-      Alert.alert("Oops! Something went wrong. Try again later.");
-    }
-  };
+  const { user, isAuthenticated } = useUser();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,7 +30,7 @@ export default function HomeScreen() {
       >
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Let's Explore</Text>
-          <Pressable onPress={handleSignOut}>
+          {isAuthenticated ? (
             <Image
               source={user?.pictureUrl}
               style={styles.userImg}
@@ -53,7 +38,7 @@ export default function HomeScreen() {
               contentFit="cover"
               transition={1000}
             />
-          </Pressable>
+          ) : null}
         </View>
 
         <SearchBarComponent search={search} setSearch={setSearch} />
@@ -93,6 +78,7 @@ const styles = StyleSheet.create({
     fontSize: hp(3.5),
     fontWeight: "bold",
     letterSpacing: 1,
+    marginBottom: 5,
   },
   userImg: {
     height: 40,
