@@ -32,7 +32,7 @@ export default function Account() {
     try {
       signOut(auth);
       setUser(null);
-      router.replace("/")
+      router.replace("/signIn")
     } catch (error) {
       Alert.alert("Oops! Something went wrong. Try again later.");
     }
@@ -41,6 +41,14 @@ export default function Account() {
   const handleUpdateUsername = () => {
     try {
       router.push("/(user-settings)/updateUsername")
+    } catch (error) {
+      Alert.alert("Oops! Something went wrong. Try again later.");
+    }
+  };
+  
+  const handleProfileImage = () => {
+    try {
+      router.push("/(user-settings)/profileImage")
     } catch (error) {
       Alert.alert("Oops! Something went wrong. Try again later.");
     }
@@ -83,7 +91,7 @@ export default function Account() {
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer}>
+        <Pressable style={styles.settingContainer} onPress={handleProfileImage}>
           <View style={{ flexDirection: "row" }}>
             <Entypo name="image" size={24} color="#222" />
             <Text style={styles.settingText}>Update your profile image</Text>
