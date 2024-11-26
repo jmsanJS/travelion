@@ -45,10 +45,18 @@ export default function Account() {
       Alert.alert("Oops! Something went wrong. Try again later.");
     }
   };
-  
+
   const handleProfileImage = () => {
     try {
       router.push("/(user-settings)/profileImage")
+    } catch (error) {
+      Alert.alert("Oops! Something went wrong. Try again later.");
+    }
+  };
+
+  const handleNewPassword = () => {
+    try {
+      router.push("/(user-settings)/newPassword")
     } catch (error) {
       Alert.alert("Oops! Something went wrong. Try again later.");
     }
@@ -98,7 +106,7 @@ export default function Account() {
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer}>
+        <Pressable style={styles.settingContainer} onPress={handleNewPassword}>
           <View style={{ flexDirection: "row" }}>
             <Entypo name="lock" size={24} color="#222" />
             <Text style={styles.settingText}>Change your password</Text>
