@@ -4,10 +4,10 @@ import { doc, getDoc } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface User {
-  username: string | undefined;
-  email: string | undefined;
-  pictureUrl: string | undefined;
-  uid: string | undefined;
+  username: string | null;
+  email: string | null;
+  pictureUrl: string | null;
+  uid: string | null;
 }
 
 interface UserContextType {
