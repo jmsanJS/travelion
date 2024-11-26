@@ -10,8 +10,9 @@ import { blurhash } from "@/constants/constants";
 import { Entypo } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
-import { auth } from "@/firebaseConfig";
+import { auth, db } from "@/firebaseConfig";
 import UserSettingsHeader from "@/components/UserSettingsHeader";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default function Account() {
   const { user, setUser, isAuthenticated } = useUser();
@@ -28,35 +29,30 @@ export default function Account() {
     return null;
   }
 
+  // Updates user's email in db if it was previously updated. (It requires signing in again)
+  useEffect(() => {
+    const checkAndUpdateEmail = async () => {
+      if (user && auth.currentUser) {
+        if (auth.currentUser.email !== user.email) {
+          try {
+            const userRef = doc(db, "users", auth.currentUser.uid);
+            await updateDoc(userRef, { email: auth.currentUser.email });
+            setUser({ ...user, email: auth.currentUser.email });
+          } catch (error) {
+            console.error("Error updating email in Firestore:", error);
+          }
+        }
+      }
+    };
+
+    checkAndUpdateEmail();
+  }, [user, setUser]);
+
   const handleSignOut = () => {
     try {
       signOut(auth);
       setUser(null);
-      router.replace("/signIn")
-    } catch (error) {
-      Alert.alert("Oops! Something went wrong. Try again later.");
-    }
-  };
-
-  const handleUpdateUsername = () => {
-    try {
-      router.push("/(user-settings)/updateUsername")
-    } catch (error) {
-      Alert.alert("Oops! Something went wrong. Try again later.");
-    }
-  };
-
-  const handleProfileImage = () => {
-    try {
-      router.push("/(user-settings)/profileImage")
-    } catch (error) {
-      Alert.alert("Oops! Something went wrong. Try again later.");
-    }
-  };
-
-  const handleNewPassword = () => {
-    try {
-      router.push("/(user-settings)/newPassword")
+      router.replace("/signIn");
     } catch (error) {
       Alert.alert("Oops! Something went wrong. Try again later.");
     }
@@ -72,7 +68,8 @@ export default function Account() {
           placeholder={{ blurhash }}
         />
         <Text style={styles.username}>{user?.username}</Text>
-        <Text style={styles.email}>{user?.email}</Text>
+        {/* Shows the actual email account. If it's updated and verified, it'll show the new one here */}
+        <Text style={styles.email}>{auth.currentUser?.email}</Text>
       </View>
       <View style={styles.allSettingsContainer}>
         <Pressable
@@ -92,28 +89,40 @@ export default function Account() {
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer} onPress={handleUpdateUsername}>
+        <Pressable
+          style={styles.settingContainer}
+          onPress={() => router.push("/(user-settings)/updateUsername")}
+        >
           <View style={{ flexDirection: "row" }}>
             <Entypo name="edit" size={24} color="#222" />
             <Text style={styles.settingText}>Update your username</Text>
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer} onPress={handleProfileImage}>
+        <Pressable
+          style={styles.settingContainer}
+          onPress={() => router.push("/(user-settings)/profileImage")}
+        >
           <View style={{ flexDirection: "row" }}>
             <Entypo name="image" size={24} color="#222" />
             <Text style={styles.settingText}>Update your profile image</Text>
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer} onPress={handleNewPassword}>
+        <Pressable
+          style={styles.settingContainer}
+          onPress={() => router.push("/(user-settings)/newPassword")}
+        >
           <View style={{ flexDirection: "row" }}>
             <Entypo name="lock" size={24} color="#222" />
             <Text style={styles.settingText}>Change your password</Text>
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer}>
+        <Pressable
+          style={styles.settingContainer}
+          onPress={() => router.push("/(user-settings)/updateEmail")}
+        >
           <View style={{ flexDirection: "row" }}>
             <Entypo name="email" size={24} color="#222" />
             <Text style={styles.settingText}>Change your email</Text>
