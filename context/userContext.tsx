@@ -11,9 +11,10 @@ interface User {
 }
 
 interface UserContextType {
-  user: User | null | undefined;
-  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
-  isAuthenticated: boolean | undefined;
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -21,10 +22,10 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null | undefined>(undefined);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(undefined);
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Actualizar los datos del usuario desde Firestore
   const updateUserData = async (userId: string) => {
     try {
       const refDoc = doc(db, "users", userId);
@@ -45,21 +46,22 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (userFromDb: FirebaseUser | null) => {
+    const unsubscribe = onAuthStateChanged(auth, async (userFromDb: FirebaseUser | null) => {
       if (userFromDb) {
         setIsAuthenticated(true);
-        updateUserData(userFromDb.uid);
+        await updateUserData(userFromDb.uid);
       } else {
         setIsAuthenticated(false);
         setUser(null);
       }
+      setIsLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isAuthenticated }}>
+    <UserContext.Provider value={{ user, setUser, isAuthenticated, isLoading }}>
       {children}
     </UserContext.Provider>
   );
