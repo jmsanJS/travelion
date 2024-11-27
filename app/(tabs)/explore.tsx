@@ -1,5 +1,4 @@
 import {
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -50,6 +49,7 @@ export default function HomeScreen() {
           searchByLabel={searchByLabel}
           setSearchByLabel={setSearchByLabel}
         />
+        <Text style={styles.destinationsTitle}>Destinations</Text>
         <Destinations
           search={search}
           searchByCategory={searchByCategory}
@@ -86,4 +86,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#333",
   },
+  destinationsTitle : {
+    fontSize: 18,
+    fontWeight: "500",
+  }
 });
