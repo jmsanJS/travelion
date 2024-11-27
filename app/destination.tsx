@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   heightPercentageToDP as hp,
@@ -21,6 +21,8 @@ import {
   SunIcon,
 } from "react-native-heroicons/solid";
 import { useFavorites } from "@/context/favoritesContext";
+import { celsiusToFarenheit, kilometersToMiles, usdToEur } from "@/modules/unitsConvertions";
+import { useSettings } from "@/context/settingsContext";
 
 export default function DestinationScreen() {
   const {
@@ -36,9 +38,25 @@ export default function DestinationScreen() {
   } = useLocalSearchParams();
   const router = useRouter();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { isKm, isEUR, isCelsius } = useSettings();
 
   // Correct type for id (only string type)
   const destinationId = Array.isArray(id) ? id[0] : id;
+
+  const priceConversion = () => {
+    if (isEUR) return "€ " + usdToEur(price);
+    else return "$ " + price;
+  }
+
+  const distanceConversion = () => {
+    if (isKm) return distance + " km";
+    else return kilometersToMiles(distance) + " mi";
+  }
+
+  const temperatureConversion = () => {
+    if (isCelsius) return weather + " °C";
+    else return celsiusToFarenheit(weather) + " °F";
+  }
 
   return (
     <View style={styles.container}>
@@ -63,7 +81,7 @@ export default function DestinationScreen() {
       <View style={styles.contentContainer}>
         <View style={styles.headerContentContainer}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.price}>$ {price}</Text>
+          <Text style={styles.price}>{priceConversion()}</Text>
         </View>
         <Text style={styles.desc}>{longDesc}</Text>
         <View style={styles.infoContainer}>
@@ -77,14 +95,14 @@ export default function DestinationScreen() {
           <View style={styles.miscContainer}>
             <MapPinIcon size={30} color={"red"} />
             <View style={{ marginLeft: 5 }}>
-              <Text style={styles.miscText}>{distance} KM</Text>
+              <Text style={styles.miscText}>{distanceConversion()}</Text>
               <Text>Distance</Text>
             </View>
           </View>
           <View style={styles.miscContainer}>
             <SunIcon size={30} color={"#FFD500"} />
             <View style={{ marginLeft: 5 }}>
-              <Text style={styles.miscText}>{weather} °C</Text>
+              <Text style={styles.miscText}>{temperatureConversion()}</Text>
               <Text>Weather</Text>
             </View>
           </View>
