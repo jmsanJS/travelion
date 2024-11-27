@@ -73,7 +73,7 @@ export default function Account() {
       </View>
       <View style={styles.allSettingsContainer}>
         <Pressable
-          onPress={() => console.log("setting")}
+          onPress={() => router.push("/(user-settings)/bookedDestinations")}
           style={styles.settingContainer}
         >
           <View style={{ flexDirection: "row" }}>
@@ -82,7 +82,10 @@ export default function Account() {
           </View>
           <Entypo name="chevron-right" size={24} color="#222" />
         </Pressable>
-        <Pressable style={styles.settingContainer}>
+        <Pressable
+          style={styles.settingContainer}
+          onPress={() => router.push("/(user-settings)/likedDestinations")}
+        >
           <View style={{ flexDirection: "row" }}>
             <Entypo name="heart" size={24} color="#222" />
             <Text style={styles.settingText}>Liked destinations</Text>
