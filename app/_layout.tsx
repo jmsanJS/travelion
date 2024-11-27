@@ -1,4 +1,5 @@
 import { FavoritesContextProvider } from "@/context/favoritesContext";
+import { SettingsContextProvider } from "@/context/settingsContext";
 import { UserContextProvider } from "@/context/userContext";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -26,17 +27,22 @@ export default function RootLayout() {
 
   return (
     <UserContextProvider>
-      <FavoritesContextProvider>
-        <Stack screenOptions={{ headerShown: false }} initialRouteName="index">
-          <Stack.Screen name="index" />
-          <Stack.Screen name="signIn" />
-          <Stack.Screen name="reset-password" />
-          <Stack.Screen name="signUp" />
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="destination" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </FavoritesContextProvider>
+      <SettingsContextProvider>
+        <FavoritesContextProvider>
+          <Stack
+            screenOptions={{ headerShown: false }}
+            initialRouteName="index"
+          >
+            <Stack.Screen name="index" />
+            <Stack.Screen name="signIn" />
+            <Stack.Screen name="reset-password" />
+            <Stack.Screen name="signUp" />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="destination" />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </FavoritesContextProvider>
+      </SettingsContextProvider>
     </UserContextProvider>
   );
 }
