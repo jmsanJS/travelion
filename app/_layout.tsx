@@ -1,3 +1,4 @@
+import { BookedContextProvider } from "@/context/bookedContext";
 import { FavoritesContextProvider } from "@/context/favoritesContext";
 import { SettingsContextProvider } from "@/context/settingsContext";
 import { UserContextProvider } from "@/context/userContext";
@@ -28,20 +29,22 @@ export default function RootLayout() {
   return (
     <UserContextProvider>
       <SettingsContextProvider>
-        <FavoritesContextProvider>
-          <Stack
-            screenOptions={{ headerShown: false }}
-            initialRouteName="index"
-          >
-            <Stack.Screen name="index" />
-            <Stack.Screen name="signIn" />
-            <Stack.Screen name="reset-password" />
-            <Stack.Screen name="signUp" />
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="destination" />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </FavoritesContextProvider>
+        <BookedContextProvider>
+          <FavoritesContextProvider>
+            <Stack
+              screenOptions={{ headerShown: false }}
+              initialRouteName="index"
+            >
+              <Stack.Screen name="index" />
+              <Stack.Screen name="signIn" />
+              <Stack.Screen name="reset-password" />
+              <Stack.Screen name="signUp" />
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="destination" />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </FavoritesContextProvider>
+        </BookedContextProvider>
       </SettingsContextProvider>
     </UserContextProvider>
   );
