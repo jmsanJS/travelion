@@ -10,7 +10,7 @@ import { HeartIcon } from "react-native-heroicons/solid";
 import { useRouter } from "expo-router";
 import { useFavorites } from "@/context/favoritesContext";
 
-interface DestinationProps {
+export interface DestinationProps {
   id: number;
   title: string;
   duration: string;
