@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   Pressable,
+  Alert,
 } from "react-native";
 import React from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -21,8 +22,13 @@ import {
   SunIcon,
 } from "react-native-heroicons/solid";
 import { useFavorites } from "@/context/favoritesContext";
-import { celsiusToFarenheit, kilometersToMiles, usdToEur } from "@/modules/unitsConvertions";
+import {
+  celsiusToFarenheit,
+  kilometersToMiles,
+  usdToEur,
+} from "@/modules/unitsConvertions";
 import { useSettings } from "@/context/settingsContext";
+import { useBookedDestination } from "@/context/bookedContext";
 
 export default function DestinationScreen() {
   const {
@@ -39,6 +45,8 @@ export default function DestinationScreen() {
   const router = useRouter();
   const { isFavorite, toggleFavorite } = useFavorites();
   const { isKm, isEUR, isCelsius } = useSettings();
+  const { toogleBookedDestination, bookedDestinations, isBooked } =
+    useBookedDestination();
 
   // Correct type for id (only string type)
   const destinationId = Array.isArray(id) ? id[0] : id;
@@ -46,17 +54,57 @@ export default function DestinationScreen() {
   const priceConversion = () => {
     if (isEUR) return "€ " + usdToEur(price);
     else return "$ " + price;
-  }
+  };
 
   const distanceConversion = () => {
     if (isKm) return distance + " km";
     else return kilometersToMiles(distance) + " mi";
-  }
+  };
 
   const temperatureConversion = () => {
     if (isCelsius) return weather + " °C";
     else return celsiusToFarenheit(weather) + " °F";
-  }
+  };
+
+  const handleBooking = () => {
+    Alert.alert(
+      "Booking confirmation",
+      "Are you sure you want to book this destination? This action can be undone later.",
+      [
+        {
+          text: "Yes, I'm sure",
+          onPress: () => {
+            toogleBookedDestination(destinationId);
+          },
+        },
+        {
+          text: "No, I'll decide later",
+          style: "cancel",
+          onPress: () => {},
+        },
+      ]
+    );
+  };
+
+  const handleCancelBooking = () => {
+    Alert.alert(
+      "Cancel Reservation",
+      "Do your really want to cancel your reservation?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            toogleBookedDestination(destinationId);
+          },
+        },
+        {
+          text: "No",
+          style: "cancel",
+          onPress: () => {},
+        },
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -107,9 +155,15 @@ export default function DestinationScreen() {
             </View>
           </View>
         </View>
-        <Pressable onPress={() => console.log("Booked")} style={styles.btn}>
-          <Text style={styles.btnText}>Book</Text>
-        </Pressable>
+        {isBooked(destinationId) ? (
+          <Pressable onPress={handleCancelBooking} style={styles.bookedBtn}>
+            <Text style={styles.bookedBtnText}>Booked</Text>
+          </Pressable>
+        ) : (
+          <Pressable onPress={handleBooking} style={styles.bookBtn}>
+            <Text style={styles.bookBtnText}>Book</Text>
+          </Pressable>
+        )}
       </View>
     </View>
   );
@@ -181,15 +235,32 @@ const styles = StyleSheet.create({
     fontSize: hp(2.2),
     fontWeight: "500",
   },
-  btn: {
+  bookBtn: {
     backgroundColor: "#000",
     width: wp(50),
     marginTop: 30,
     borderRadius: 50,
     alignSelf: "center",
   },
-  btnText: {
+  bookBtnText: {
     color: "#fff",
+    fontSize: hp(2.5),
+    fontWeight: "500",
+    textAlign: "center",
+    padding: hp(2),
+    letterSpacing: 1,
+  },
+  bookedBtn: {
+    backgroundColor: "#FFF",
+    borderColor: "#2AAA8A",
+    borderWidth: 2,
+    borderRadius: 50,
+    width: wp(50),
+    marginTop: 30,
+    alignSelf: "center",
+  },
+  bookedBtnText: {
+    color: "#2AAA8A",
     fontSize: hp(2.5),
     fontWeight: "500",
     textAlign: "center",
