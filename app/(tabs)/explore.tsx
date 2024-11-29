@@ -87,7 +87,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#333",
   },
   destinationsTitle : {
-    fontSize: 18,
+    fontSize: hp(2),
     fontWeight: "500",
+    marginTop: 20,
+    marginBottom: -10
   }
 });
