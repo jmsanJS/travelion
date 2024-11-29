@@ -59,7 +59,13 @@ export default function signIn() {
       router.push("/(tabs)/explore");
     } catch (signInError) {
       if (signInError instanceof FirebaseError) {
-        console.error("Error code: ", signInError.code);
+        if (signInError.code === "auth/invalid-email") {
+          Alert.alert("Invalid email", "Please enter a valid email address.");
+        } else if (signInError.code === "auth/invalid-credential") {
+          Alert.alert("Invalid credential", "Please enter a your email address and password.");
+        } else if (signInError.code === "auth/too-many-requests") {
+          Alert.alert("Too many requests attemps", "You have exceeded your maximum number of requests to this account. Please try again in a few minutes.");
+        }
       }
     } finally {
       setLoading(false);

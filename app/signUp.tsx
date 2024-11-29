@@ -39,8 +39,8 @@ export default function signUp() {
   const router = useRouter();
 
   const handleSignUp = async () => {
-    if (!username || !email || !password || !pictureUrl || !checked) {
-      Alert.alert("All fields are required.");
+    if (!username || !email || !password || !checked) {
+      Alert.alert("Please, fill out the sign up form. Profile picture is not mandatory.");
       return;
     }
     setLoading(true);
@@ -60,12 +60,7 @@ export default function signUp() {
           userId: user.uid,
         });
 
-        setUser({
-          uid: user.uid,
-          username,
-          email,
-          pictureUrl,
-        });
+        setUser({ uid: user.uid, username, email, pictureUrl });
 
         sendEmailVerification(user);
         Alert.alert("Please, check your email and verify your account.");
@@ -74,10 +69,14 @@ export default function signUp() {
       } catch (firestoreError) {
         Alert.alert("Oops! Something went wrong. Please try again.");
       }
-    } catch (authError) {
-      if (authError instanceof FirebaseError) {
-        const errorCode = authError.code;
-        console.error("Error code: ", errorCode);
+    } catch (signUpError) {
+      if (signUpError instanceof FirebaseError) {
+        console.error("Error code: ", signUpError.code);
+        if (signUpError.code === "auth/invalid-email") {
+          Alert.alert("Invalid email", "Please enter a valid email address.");
+        } else if (signUpError.code === "auth/password-does-not-meet-requirements") {
+          Alert.alert("Invalid password", "Your password must be at least 8 caracters long, and it must contain at least 1 capital letter, 1 number, 1 number, and 1 symbol.");
+        }
       }
     } finally {
       setLoading(false);
